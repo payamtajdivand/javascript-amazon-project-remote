@@ -109,6 +109,8 @@ function renderOrderSummary() {
 
   document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
+  updatePaymentSummary();
+
   document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {
       const productId = link.dataset.productId;
@@ -132,6 +134,57 @@ function renderOrderSummary() {
       renderOrderSummary();
     });
   });
+}
+
+function updatePaymentSummary() {
+  let itemsCostCents = 0;
+  let shippingCostCents = 0;
+
+  cart.forEach((cartItem) => {
+    let matchingProduct;
+    products.forEach((product) => {
+      if (product.id === cartItem.productId) {
+        matchingProduct = product;
+      }
+    });
+
+    itemsCostCents += matchingProduct.priceCents * cartItem.quantity;
+
+    let deliveryOption;
+    deliveryOptions.forEach((option) => {
+      if (option.id === cartItem.deliveryOptionId) {
+        deliveryOption = option;
+      }
+    });
+
+    shippingCostCents += deliveryOption.priceCents;
+  });
+
+  const totalBeforeTaxCents = itemsCostCents + shippingCostCents;
+  const taxCents = totalBeforeTaxCents * 0.1;
+  const totalCents = totalBeforeTaxCents + taxCents;
+
+  const itemCount = cart.reduce(
+    (total, item) => total + Number(item.quantity),
+    0
+  );
+
+  document.querySelector(".js-items-cost").innerHTML = `$${formatCurrency(
+    itemsCostCents
+  )}`;
+  document.querySelector(".js-shipping-cost").innerHTML = `$${formatCurrency(
+    shippingCostCents
+  )}`;
+  document.querySelector(".js-total-before-tax").innerHTML = `$${formatCurrency(
+    totalBeforeTaxCents
+  )}`;
+  document.querySelector(".js-tax-cost").innerHTML = `$${formatCurrency(
+    taxCents
+  )}`;
+  document.querySelector(".js-order-total").innerHTML = `$${formatCurrency(
+    totalCents
+  )}`;
+  document.querySelector(".js-item-count").innerHTML = itemCount;
 }
 
 renderOrderSummary();
