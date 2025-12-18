@@ -2,10 +2,10 @@ export { cart };
 
 class Cart {
   cartItem;
-  localStoragekey;
+  #localStoragekey;
 
   constructor(localStoragekey) {
-    this.localStoragekey = localStoragekey;
+    this.#localStoragekey = localStoragekey;
 
     this.loadFromStorage();
   }
