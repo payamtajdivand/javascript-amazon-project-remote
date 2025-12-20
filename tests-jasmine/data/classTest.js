@@ -1,7 +1,13 @@
 import { Product } from "../../data/products.js";
 import { Clothing } from "../../data/products.js";
+import { loadProducts } from "../../data/products.js";
 
 describe("Test suit: Prodcut", () => {
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
   it("has correct property and methods", () => {
     const product = new Product({
       id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -22,6 +28,11 @@ describe("Test suit: Prodcut", () => {
 });
 
 describe("Test suit: Clothing", () => {
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
   it("has correct Properties", () => {
     const clothing1 = new Clothing({
       id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
