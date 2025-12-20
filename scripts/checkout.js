@@ -3,9 +3,8 @@ import { products } from "../data/products.js";
 import formatCurrency from "./utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
-import "../data/backend-practice.js"
-
-
+import { loadProducts } from "../data/products.js";
+//import "../data/backend-practice.js"
 
 function deliveryOptionsHTML(matchingProduct, cartItem) {
   let html = "";
@@ -190,4 +189,8 @@ function updatePaymentSummary() {
   document.querySelector(".js-item-count").innerHTML = itemCount;
 }
 
-renderOrderSummary();
+loadProducts(() => {
+  renderOrderSummary();
+});
+
+
