@@ -4,7 +4,45 @@ import formatCurrency from "./utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import { loadProducts } from "../data/products.js";
+import { loadCart } from "../data/cart.js";
 //import "../data/backend-practice.js"
+
+Promise.all([
+  new Promise((resolve) => {
+    loadProducts(() => {
+      resolve("value1");
+    });
+  }),
+
+  new Promise((resolve) => {
+    loadCart(() => {
+      resolve("value2");
+    });
+  }),
+]).then((values) => {
+  console.log(values);
+  renderOrderSummary();
+  updatePaymentSummary();
+});
+
+/*new Promise((resolve) => {
+  loadProducts(() => {
+    resolve();
+  });
+})
+
+  .then(() => {
+    return new Promise((resolve) => {
+      loadCart(() => {
+        resolve();
+      });
+    });
+  })
+
+  .then(() => {
+    renderOrderSummary();
+    updatePaymentSummary();
+  })*/
 
 function deliveryOptionsHTML(matchingProduct, cartItem) {
   let html = "";
@@ -188,9 +226,14 @@ function updatePaymentSummary() {
   )}`;
   document.querySelector(".js-item-count").innerHTML = itemCount;
 }
-
+/*
 loadProducts(() => {
-  renderOrderSummary();
+  loadCart(() => {
+    renderOrderSummary();
+    updatePaymentSummary();
+  });
 });
-
-
+*/
+/*loadProducts(() => {
+  renderOrderSummary();
+}); */
