@@ -3,18 +3,24 @@ import { products } from "../data/products.js";
 import formatCurrency from "./utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
-import { loadProducts, loadProductsFetch } from "../data/products.js";
+import { loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 //import "../data/backend-practice.js"
 
 async function loadPage() {
-  await loadProductsFetch();
+  try {
+    await loadProductsFetch();
+    //throw "error1";
 
-  await new Promise((resolve) => {
-    loadCart(() => {
-      resolve();
+    const value = await new Promise((resolve, reject) => {
+      loadCart(() => {
+        //reject("error3")
+        resolve("value4");
+      });
     });
-  });
+  } catch (error) {
+    console.log("Unexpected Error ,  please try again later!");
+  }
 
   renderOrderSummary();
   updatePaymentSummary();
