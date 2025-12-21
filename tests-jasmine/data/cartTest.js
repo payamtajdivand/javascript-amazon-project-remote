@@ -1,9 +1,9 @@
 import { addToCart, cart, loadFromStorage } from "../../data/cart.js";
-import { loadProducts } from "../../data/products.js";
+import { loadProducts, loadProductsFetch } from "../../data/products.js";
 
 describe("test suit: addToCart", () => {
   beforeAll((done) => {
-    loadProducts(() => {
+    loadProductsFetch().then(() => {
       done();
     });
   });
