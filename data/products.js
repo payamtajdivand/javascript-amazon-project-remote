@@ -65,7 +65,7 @@ export function loadProductsFetch() {
   return promise;
 }
 
-/*
+
 loadProductsFetch().then(() => {
   console.log("next step");
 });

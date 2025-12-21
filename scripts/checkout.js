@@ -5,6 +5,8 @@ import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import { loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
+import { addOrder } from "../data/orders.js";
+
 //import "../data/backend-practice.js"
 
 async function loadPage() {
@@ -253,3 +255,26 @@ loadProducts(() => {
 /*loadProducts(() => {
   renderOrderSummary();
 }); */
+
+document
+  .querySelector(".js-place-order")
+  .addEventListener("click", async () => {
+    try {
+      const response = await fetch("https://supersimplebackend.dev/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart: cart,
+        }),
+      });
+
+      const order = await response.json();
+      addOrder(order);
+    } catch (error) {
+      console.log("Unexpected Error , Try again later!");
+    }
+
+    window.location.href = "orders.html";
+  });
