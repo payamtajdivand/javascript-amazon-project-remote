@@ -80,8 +80,22 @@ function renderProductsGrid() {
   document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     button.addEventListener("click", () => {
       const productId = button.dataset.productId;
-      addToCart(productId);
+
+      // Get the quantity from the dropdown next to the button
+      const quantityDropdown = button.parentElement.querySelector("select");
+      const quantity = quantityDropdown.value;
+
+      addToCart(productId, quantity);
       updateCartQuantity();
+
+      // Show "Added" message
+      const addedMessage = button.parentElement.querySelector(".added-to-cart");
+      addedMessage.classList.add("added-to-cart-show");
+
+      // Hide "Added" message after 2 seconds
+      setTimeout(() => {
+        addedMessage.classList.remove("added-to-cart-show");
+      }, 2000);
     });
   });
 }
